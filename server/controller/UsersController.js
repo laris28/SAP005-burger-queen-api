@@ -1,7 +1,9 @@
-const users = [
-  { id: 1, username: 'karine',
-   email: 'karinee@teste.com'},
-]
+const Users = require('../db/models/UserModels') 
+
+// const users = [
+//   { id: 1, username: 'larissa',
+//    email: 'larissa@teste.com'},
+// ]
 
 //Pegar os usuários
 const getAllUsers = (req, res) => {
@@ -17,14 +19,14 @@ const getUserId = (req, res)=> {
 }
 
 //Criar
-const usersPost = (req, res) => {
-  const body = req.body;
+async function usersPost (req, res) {
+  const { name, email, password, role } = req.body;
   console.log(body);
   if(!body){
     return res.status(400).end();
   } else { 
-    users.push(body);
-    return res.status(201).send(body);
+    const users = await Users.create({ name, email, password, role });
+    res.status(200).send(users);
   }
 }
 
