@@ -24,7 +24,7 @@ if (config.use_env_variable) {
 //   }
 // }
 
-teste()
+// teste()
 
 fs
   .readdirSync(__dirname)
