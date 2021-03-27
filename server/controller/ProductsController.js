@@ -1,54 +1,69 @@
-// aqui vai o código que acessa o banco de dados
-
-
+const Products= require('../db/models')
   
-  const products = [
-    {
-      "id":1,
-      "name": "Hamburger Simples",
-      "flavor": "carne",
-      "complement": "queijo",
-    },
-
-  ]
-  
-  const getAllProducts = (req, res) => {
-    console.log("você também pode utilizar o console para visualizar =)")
-    res.send(products)
+async function getAllProducts(req, res)  {
+  try {
+    const products = await Products.findAll();
+    res.status(200).send(products);
+  } catch (error) {
+    console.log(error);
   }
-  
-  module.exports = { getAllProducts }
+}
 
-  //Pegar por id
-const getProductId = (req, res)=> {
-  let id = Number(req.params.id)
-  const ftArray = products.filter(data => data.id === id)
-  res.status(200).send(ftArray)
+//Pegar por id
+async function getProductId(req, res) {
+  try {
+    const id = req.params;
+    const product = await Products.findOne({
+      where: id,
+    });
+    res.status(200).send(product);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Não deu certo");
+  }
 }
   
 //Criar Produtos
-const ProductPost = (req, res) => {
-  const body = req.body;
-  console.log(body);
-  if(!body){
-    return res.status(400).end();
-  } else { 
-    products.push(body);
-    return res.status(201).send(body);
+async function ProductPost(req, res) {
+  try {
+    const { name, flavor, complement, sub_type, type, price } = req.body;
+    const product = await Products.create({name, flavor, complement, sub_type, type, price });
+    res.status(200).send(product);
+  } catch (error) {
+    console.log(error);
   }
 }
 //Alterar Produto
-const ProductPut = (req, res) => {
-  console.log("alterar user ok")
-  res.send("alterar user ok")
-}
+async function ProductPut(req, res) {
+  try {
+    const { name, flavor, complement, sub_type, type, price } = req.body;
 
+    const id = req.params;
+    await Products.update(
+      {name, flavor, complement, sub_type, type, price },
+      {
+        where: id,
+      }
+    );
+    res.status(200).send("Alteração feita");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Não deu certo");
+  }
+}
 //Deletar Produtos
-const productsDelete = (req, res) => {
-  let id = Number(req.params.id)
-  const ftFilter2 = products.filter(data => data.id != id)
-  console.log(ftFilter2)
-  res.status(200).send(ftFilter2)
+async function productsDelete(req, res) {
+  try {
+    const id = req.params;
+    await Products.destroy({
+      where: id,
+    });
+    res.status(200).send("Produto deletado");
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("não deu certo");
+  }
+
 }
 
 

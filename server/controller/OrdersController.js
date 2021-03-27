@@ -1,9 +1,11 @@
-const orders = [{
-    "id":1,
-    "name": "Hamburger Simples",
-    "flavor": "frango",
-    "complement": "queijo",
-}];
+const orders = [
+//   {
+//     "id":1,
+//     "name": "Hamburger Simples",
+//     "flavor": "frango",
+//     "complement": "queijo",
+// }
+];
 
 
 //Pegar usuários

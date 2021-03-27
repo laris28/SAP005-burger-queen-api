@@ -1,48 +1,58 @@
-const Users = require('../db/models/UserModels') 
+const db = require('../db/models');
 
-// const users = [
-//   { id: 1, username: 'larissa',
-//    email: 'larissa@teste.com'},
-// ]
-
-//Pegar os usuários
 const getAllUsers = (req, res) => {
-  res.send(users)
-}
-console.log(users)
-
-//pegar por id
-const getUserId = (req, res)=> {
-  let id = Number(req.params.id)
-  const ftArray = users.filter(data => data.id === id)
-  res.status(200).send(ftArray)
-}
-
-//Criar
-async function usersPost (req, res) {
-  const { name, email, password, role } = req.body;
-  console.log(body);
-  if(!body){
-    return res.status(400).end();
-  } else { 
-    const users = await Users.create({ name, email, password, role });
-    res.status(200).send(users);
+  console.log("get all users, chamada =)")
+  res.status(200).send({
+      message: "Retorna todos os Users"
+  })
+};
+//RETORNA UM USUÁRIO PELO ID
+const getUserId = (req, res) => {
+  console.log("get user, chamada =)")
+  const userId = req.params.uid
+  if (userId === 'desconhecido') {
+      res.status(404).send({
+          message: "ID desconhecido, user not found"
+      })
+  } else {
+      res.status(200).send({
+          message: "Retorna um usuário pelo ID",
+          id: userId
+      })
   }
-}
+};
 
-//Alterar 
-const usersPut = (req, res) => {
-  console.log("Alterado!")
-  res.send("Alterado!")
-}
+const usersPost = (req, res) => {
+  /*const user = {
+      "email": req.body.email,
+      "password": req.body.password,
+      "role": req.body.role,
+      "restaurant": req.body.restaurant,
+      "name": req.body.name
+  }*/
+  console.log("post user chamada ;)")
+  res.status(201).send({
+      message: "Insere um novo user",
+      //userCriado: user
+  })
+};
 
-//Deletar usuário
-const usersDelete = (req, res) => {
-  let id = Number(req.params.id)
-  const ftArray2 = users.filter(data => data.id != id)
-  console.log(ftArray2)
-  res.status(200).send(ftArray2)
-}
-
+const  usersPut = (req, res) => {
+  console.log("update user chamada ;)")
+  const userId = req.params.uid
+  res.status(201).send({
+      message: "Atualiza um user",
+      id: userId
+  })
+};
+const usersDelete  = (req, res) => {
+  const userId = req.params.uid
+  console.log("delete user chamada ;)")
+  res.status(200).send({
+      message: "exclui um user",
+      id: userId
+  })
+};
+ 
 
 module.exports = { getAllUsers, getUserId, usersPost, usersPut, usersDelete  }
