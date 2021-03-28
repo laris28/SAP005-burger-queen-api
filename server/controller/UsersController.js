@@ -7,7 +7,7 @@ const getAllUsers = (req, res) => {
     })
     .catch(() =>
       res.json({
-        message: "Não foi possível processar a operação",
+        message: "error ",
       })
     );
 };
@@ -19,7 +19,7 @@ const getUserId = (req, res) => {
     })
     .catch(() =>
       res.json({
-        message: "Não foi possível processar a operação",
+        message: "error ",
       })
     );
 };
@@ -38,7 +38,7 @@ const usersPost = (req, res) => {
     })
     .catch(() =>
       res.json({
-        message: "Não foi possível processar a operação",
+        message: "error",
       })
     );
 };
@@ -62,10 +62,11 @@ const usersPut = (req, res) => {
     })
     .catch(() => {
       res.json({
-        message: "Deu ruim!",
+        message: "error",
       });
     });
 };
+
 const usersDelete = (req, res) => {
   db.Users.destroy({ where: { id: req.params.id } })
     .then(() => {
@@ -75,9 +76,10 @@ const usersDelete = (req, res) => {
     })
     .catch(() => {
       res.json({
-        message: "Deu ruim!",
+        message: "error ",
       });
     });
 };
+
 
 module.exports = { getAllUsers, getUserId, usersPost, usersPut, usersDelete  }
