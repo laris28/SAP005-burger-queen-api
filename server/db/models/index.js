@@ -1,7 +1,14 @@
+/* eslint-disable global-require */
+/* eslint-disable prefer-template */
+/* eslint-disable no-path-concat */
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable lines-around-directive */
+// eslint-disable-next-line strict
 'use strict';
 
 const fs = require('fs');
 const path = require('path');
+// eslint-disable-next-line import/newline-after-import
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
@@ -17,14 +24,16 @@ if (config.use_env_variable) {
 
 fs
   .readdirSync(__dirname)
-  .filter(file => {
+  // eslint-disable-next-line arrow-body-style
+  .filter((file) => {
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })
-  .forEach(file => {
+  .forEach((file) => {
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
 
+// eslint-disable-next-line arrow-parens
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
@@ -34,4 +43,5 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+// eslint-disable-next-line eol-last
 module.exports = db;

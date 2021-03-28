@@ -6,10 +6,11 @@ const getAllUsers = (req, res) => {
       res.status(200).json(result);
     })
     .catch(() =>
+      // eslint-disable-next-line implicit-arrow-linebreak
       res.json({
+        // eslint-disable-next-line quotes
         message: "error ",
-      })
-    );
+      }));
 };
 
 const getUserId = (req, res) => {
@@ -18,13 +19,15 @@ const getUserId = (req, res) => {
       res.status(200).json(result);
     })
     .catch(() =>
+      // eslint-disable-next-line implicit-arrow-linebreak
       res.json({
+        // eslint-disable-next-line quotes
         message: "error ",
-      })
-    );
+      }));
 };
 
 const usersPost = (req, res) => {
+  // eslint-disable-next-line object-curly-newline
   const { name, email, password, role, restaurant } = req.body;
   db.Users.create({
     name,
@@ -37,13 +40,15 @@ const usersPost = (req, res) => {
       res.status(201).json(result);
     })
     .catch(() =>
+      // eslint-disable-next-line implicit-arrow-linebreak
       res.json({
+        // eslint-disable-next-line quotes
         message: "error",
-      })
-    );
+      }));
 };
 
 const usersPut = (req, res) => {
+  // eslint-disable-next-line object-curly-newline
   const { name, email, password, role, restaurant } = req.body;
   db.Users.update(
     {
@@ -53,15 +58,18 @@ const usersPut = (req, res) => {
       role,
       restaurant,
     },
+    // eslint-disable-next-line comma-dangle
     { where: { id: req.params.id } }
   )
     .then(() => {
       res.status(200).json({
+        // eslint-disable-next-line quotes
         message: "Dados atualizados!",
       });
     })
     .catch(() => {
       res.json({
+        // eslint-disable-next-line quotes
         message: "error",
       });
     });
@@ -71,15 +79,22 @@ const usersDelete = (req, res) => {
   db.Users.destroy({ where: { id: req.params.id } })
     .then(() => {
       res.status(200).json({
-        message: "Deletado!",
+        message: 'Deletado!',
       });
     })
     .catch(() => {
       res.json({
+        // eslint-disable-next-line quotes
         message: "error ",
       });
     });
 };
 
-
-module.exports = { getAllUsers, getUserId, usersPost, usersPut, usersDelete  }
+module.exports = {
+  getAllUsers,
+  getUserId,
+  usersPost,
+  usersPut,
+  usersDelete,
+// eslint-disable-next-line eol-last
+};

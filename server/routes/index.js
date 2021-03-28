@@ -1,15 +1,17 @@
-const { Router } = require('express')
-const UsersRouter = require("./UsersRouter")
-const ProductsRouter = require("./ProductsRouter")
+const { Router } = require('express');
+// eslint-disable-next-line quotes
+const UsersRouter = require("./UsersRouter");
+// eslint-disable-next-line quotes
+const ProductsRouter = require("./ProductsRouter");
+// eslint-disable-next-line quotes
+const OrdersRouter = require("./OrdersRouter");
 
-
-
-const router = Router()
+const router = Router();
 
 // aqui vai todas as rotas
-router.use('/users', UsersRouter)
-router.use('/products', ProductsRouter)
+router.use('/users', UsersRouter);
+router.use('/products', ProductsRouter);
+router.use('/orders', OrdersRouter);
 
-
-
-module.exports = router
+// eslint-disable-next-line eol-last
+module.exports = router;

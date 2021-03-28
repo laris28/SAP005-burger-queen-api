@@ -1,6 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable strict */
+// eslint-disable-next-line strict
+// eslint-disable-next-line lines-around-directive
 'use strict';
 const {
-  Model
+  Model,
+// eslint-disable-next-line import/newline-after-import
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Products extends Model {
@@ -12,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+  // eslint-disable-next-line no-extra-semi
   };
   Products.init({
     name: DataTypes.STRING,
@@ -20,10 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     price: DataTypes.INTEGER,
     image: DataTypes.STRING,
     type: DataTypes.STRING,
-    subtype: DataTypes.STRING
+    subtype: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Products',
   });
   return Products;
+// eslint-disable-next-line eol-last
 };
