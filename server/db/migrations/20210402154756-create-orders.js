@@ -9,6 +9,7 @@ module.exports = {
       },
       user_id: {
         allowNull: false,
+        references: { model: 'Users', key: 'id' },
         type: Sequelize.INTEGER,
       },
       client_name: {
@@ -21,10 +22,12 @@ module.exports = {
       },
       status: {
         allowNull: false,
+        defaultValue: 'pending',
         type: Sequelize.STRING,
       },
       processedAt: {
         allowNull: false,
+        defaultValue: Date.now(),
         type: Sequelize.DATE,
       },
       createdAt: {

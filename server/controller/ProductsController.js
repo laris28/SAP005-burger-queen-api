@@ -6,16 +6,11 @@ const getAllProducts = (req, res) => {
   db.Products.findAll()
     .then((result) => {
       res.status(200).json(result);
-      // eslint-disable-next-line no-undef
-      connection.end();
     })
-    .catch(() =>
-      // eslint-disable-next-line implicit-arrow-linebreak
-      res.json({
-        // eslint-disable-next-line quotes
-        message: "error ",
-      // eslint-disable-next-line comma-dangle
-      }));
+    .catch((error) => {
+      res.status(400).json(error.message);
+    // eslint-disable-next-line semi
+    })
 };
 
 const getProductId = (req, res) => {
@@ -36,7 +31,7 @@ const ProductPost = (req, res) => {
   // eslint-disable-next-line camelcase
   // eslint-disable-next-line object-curly-newline
   const { name, price, flavor, complement, image, type, sub_type } = req.body;
-  db.Products.create({
+  db.Products.bulkCreate([{
     name,
     price,
     flavor,
@@ -44,17 +39,14 @@ const ProductPost = (req, res) => {
     image,
     type,
     sub_type,
-  })
+  }])
     .then((result) => {
       res.status(201).json(result);
     })
-    .catch(() =>
-      // eslint-disable-next-line implicit-arrow-linebreak
-      res.json({
-        // eslint-disable-next-line quotes
-        message: "error ",
-      // eslint-disable-next-line comma-dangle
-      }));
+    .catch((error) => {
+      res.status(400).json(error.message);
+    // eslint-disable-next-line semi
+    })
 };
 
 const ProductPut = (req, res) => {

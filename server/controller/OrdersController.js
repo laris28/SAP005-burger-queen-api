@@ -1,6 +1,5 @@
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable camelcase */
-
 const db = require('../db/models');
 
 const getAllOrders = (req, res) => {
@@ -10,22 +9,20 @@ const getAllOrders = (req, res) => {
   //   include: { association: 'users' },
   // });
 
-  db.Orders.findAll({
-    attributes: { exclude: ['password'] },
-  })
+  db.Orders.findAll()
     .then((result) => {
       // res.status(200).json(user.users);
       res.status(200).json(result);
     })
-    .catch(() => res.status(400).json({
-      message: 'erro ao processar requisição',
+    .catch(() => res.json({
+      message: 'error',
     }));
 };
 
 const orderPost = (req, res) => {
   // const { user_id } = req.params;
   const {
-    user_id, client_name, table, status, processedAt,
+    user_id, client_name, table, status, 
   } = req.body;
 
   // const user = db.Users.findByPk(user_id);
@@ -39,34 +36,33 @@ const orderPost = (req, res) => {
     client_name,
     table,
     status,
-    processedAt,
   })
     .then((result) => {
       res.status(201).json(result);
     })
-    .catch(() => res.status(400).json({
-      message: 'erro ao salvar ordem',
+    .catch(() => res.json({
+      message: 'error',
     }));
 };
 
 const getOrderId = (req, res) => {
-  db.Orders.findAll({
-    attributes: { exclude: ['password'] },
-    where: { id: req.params.id },
-  })
-    .then((product) => {
-      res.status(200).json(product);
+  db.Orders.findAll({ where: { id: req.params.id } })
+    .then((products) => {
+      res.status(200).json(products);
     })
-    .catch(() => res.status(400).json({
-      message: 'erro ao processar requisição',
+    .catch(() => res.json({
+      message: 'error',
     }));
 };
 
 const orderPut = (req, res) => {
   const {
-    status,
+    user_id, client_name, table, status,
   } = req.body;
   db.Orders.update({
+    user_id,
+    client_name,
+    table,
     status,
   }, { where: { id: req.params.id } })
 
@@ -75,9 +71,11 @@ const orderPut = (req, res) => {
         message: 'ordem atualizada',
       });
     })
-    .catch(() => res.status(400).json({
-      message: 'erro ao atualizar ordem',
-    }));
+    .catch(() => {
+      res.json({
+        message: 'error',
+      });
+    });
 };
 
 const orderDelete = (req, res) => {
@@ -87,16 +85,18 @@ const orderDelete = (req, res) => {
         message: 'ordem excluída',
       });
     })
-    .catch(() => res.status(400).json({
-      message: 'erro ao excluir ordem',
-    }));
+    .catch(() => {
+      res.json({
+        message: 'error',
+      });
+    });
 };
 
-// eslint-disable-next-line no-trailing-spaces
 module.exports = { 
   getAllOrders,
   getOrderId,
   orderPost, 
   orderPut, 
   orderDelete,
+// eslint-disable-next-line eol-last
 };
