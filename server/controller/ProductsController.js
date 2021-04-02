@@ -1,16 +1,18 @@
 /* eslint-disable camelcase */
-/* eslint-disable linebreak-style */
-const db = require('../db/models');
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable quotes */
+const db = require("../db/models");
 
 const getAllProducts = (req, res) => {
   db.Products.findAll()
     .then((result) => {
       res.status(200).json(result);
+      // eslint-disable-next-line no-undef
     })
-    .catch((error) => {
-      res.status(400).json(error.message);
-    // eslint-disable-next-line semi
-    })
+    .catch(() =>
+      res.json({
+        message: "Deu ruim!",
+      }));
 };
 
 const getProductId = (req, res) => {
@@ -19,19 +21,16 @@ const getProductId = (req, res) => {
       res.status(200).json(result);
     })
     .catch(() =>
-      // eslint-disable-next-line implicit-arrow-linebreak
       res.json({
-        // eslint-disable-next-line quotes
-        message: "error",
+        message: "Deu ruim!",
       }));
 };
 
 const ProductPost = (req, res) => {
-  // eslint-disable-next-line object-curly-newline
-  // eslint-disable-next-line camelcase
-  // eslint-disable-next-line object-curly-newline
-  const { name, price, flavor, complement, image, type, sub_type } = req.body;
-  db.Products.bulkCreate([{
+  const {
+    name, price, flavor, complement, image, type, sub_type,
+  } = req.body;
+  db.Products.create({
     name,
     price,
     flavor,
@@ -39,7 +38,7 @@ const ProductPost = (req, res) => {
     image,
     type,
     sub_type,
-  }])
+  })
     .then((result) => {
       res.status(201).json(result);
     })
@@ -50,9 +49,9 @@ const ProductPost = (req, res) => {
 };
 
 const ProductPut = (req, res) => {
-  // eslint-disable-next-line camelcase
-  // eslint-disable-next-line object-curly-newline
-  const { name, price, flavor, complement, image, type, sub_type } = req.body;
+  const {
+    name, price, flavor, complement, image, type, sub_type,
+  } = req.body;
   db.Products.update(
     {
       name,
@@ -67,34 +66,26 @@ const ProductPut = (req, res) => {
   )
     .then(() => {
       res.status(200).json({
-        // eslint-disable-next-line quotes
-        message: "Dados atualizados com sucesso! ",
+        message: "Dados atualizados!",
       });
     })
-    .catch(() => {
-      res.json({
-        // eslint-disable-next-line quotes
-        message: "error ",
-      });
-    });
+    .catch((error) => {
+      res.status(400).json(error);
+    // eslint-disable-next-line semi
+    })
 };
 
 const productsDelete = (req, res) => {
   db.Products.destroy({ where: { id: req.params.id } })
     .then(() => {
       res.status(200).json({
-        message: 'produto excluído',
+        message: 'Deletado!',
       });
     })
     .catch(() => res.status(400).json({
-      message: 'erro ao excluir produto',
+      message: 'Deu ruim!',
     }));
 };
-
 module.exports = {
-  getAllProducts,
-  getProductId,
-  ProductPost,
-  ProductPut,
-  productsDelete,
+  getAllProducts, getProductId, ProductPost, ProductPut, productsDelete,
 };

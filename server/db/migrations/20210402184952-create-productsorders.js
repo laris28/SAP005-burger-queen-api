@@ -35,4 +35,5 @@ module.exports = {
   down: async (queryInterface) => {
     await queryInterface.dropTable('ProductOrders');
   },
+// eslint-disable-next-line eol-last
 };
